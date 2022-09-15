@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 # Set custom model authentication model for the project
 # See https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#substituting-a-custom-user-model
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -46,16 +46,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 3-rd party apps
-    "rest_framework",
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_spectacular',
     # Local
-    "accounts.apps.AccountsConfig",
-    "posts.apps.PostsConfig",
+    'accounts.apps.AccountsConfig',
+    'posts.apps.PostsConfig',
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 MIDDLEWARE = [
@@ -140,3 +144,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Documentation settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Backend for Blog",
+    "DESCRIPTION": "Project that represents a backend web service that enables users to publish posts and subscribe to other users posts.",
+    "VERSION": "1.0.0",
+    # OTHER SETTINGS
+}
