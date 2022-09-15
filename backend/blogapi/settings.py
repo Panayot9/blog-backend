@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Set custom model authentication model for the project
+# See https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#substituting-a-custom-user-model
+AUTH_USER_MODEL = "accounts.CustomUser"
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -41,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Local
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
