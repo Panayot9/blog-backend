@@ -1,2 +1,12 @@
-# blog-backend
-Backend for Blog
+# Backend for Blog
+Project that represents a backend web service that enables users to publish posts and subscribe to other users posts.
+
+To start project locally use the following command:
+```sh
+>>> ./start_app.sh
+```
+
+To run the style checks and tests use the following command:
+```sh
+>>> ./start_app.sh test
+```
