@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # 3-rd party apps
     'rest_framework',
     'rest_framework.authtoken',
+    'dj_rest_auth',
     'drf_spectacular',
     # Local
     'accounts.apps.AccountsConfig',
@@ -58,6 +59,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',  # use token authentication
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -152,3 +156,10 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     # OTHER SETTINGS
 }
+
+# Enable JWT authentication in dj-rest-auth
+REST_USE_JWT = True
+
+# Declare what you want the cookie key to be called. If you want to use the refresh token feature, also be sure to set that variable.
+JWT_AUTH_COOKIE = 'my-app-auth'
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
