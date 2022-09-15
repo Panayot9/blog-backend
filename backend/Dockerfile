@@ -21,6 +21,6 @@ COPY . .
 
 CMD python manage.py migrate && \
     python manage.py collectstatic --noinput && \
-    python manage.py createsuperuser --noinput || true && \
+    # python manage.py createsuperuser --noinput || true && \
     python manage.py shell -i ipython && \
     python manage.py runserver ${DJANGO_HOST}:${DJANGO_PORT}
