@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+
+  backend:
+    image: blog-backend-test
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: sh -c "flake8 . && python manage.py test"

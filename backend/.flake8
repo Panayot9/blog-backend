@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 120
+exclude =
+    __pycache__,
+    manage.py,
+    restapi/tests.py,
+    */migrations/*,
+    models.py
+
+max-complexity = 10
+ignore = E266,W504
