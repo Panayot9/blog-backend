@@ -10,3 +10,5 @@ To run the style checks and tests use the following command:
 ```sh
 >>> ./start_app.sh test
 ```
+
+To read the dynamically generated documentation visit http://localhost:5001/api/schema/swagger-ui/#/
