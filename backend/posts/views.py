@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
@@ -38,8 +39,17 @@ class SearchResultsListView(generics.ListAPIView):
     def get_queryset(self):
         username = self.request.user.username
         queryset = Post.objects.filter(author__username=username)
+
         q = self.request.query_params.get('q')
         if q is not None:
             queryset = queryset.filter(title__icontains=q).distinct()
+
+        start_date = self.request.query_params.get('start_date')
+        if start_date is not None:
+            queryset = queryset.filter(created_at__gte=datetime.datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%S')).distinct()
+
+        end_date = self.request.query_params.get('end_date')
+        if end_date is not None:
+            queryset = queryset.filter(created_at__lte=datetime.datetime.strptime(end_date, '%Y-%m-%dT%H:%M:%S')).distinct()
 
         return queryset
