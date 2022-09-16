@@ -1,22 +1,27 @@
-version: '3.4'
+version: '3.9'
 
 services:
   storage:
     image: postgres
     volumes:
-      - ./storage/db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
+    networks:
+      - backend-network
+
+
 
   backend:
     image: blog-backend
     environment:
       DJANGO_HOST: 0.0.0.0
       DJANGO_PORT: 5001
+      POSTGRES_HOST: storage
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -26,3 +31,9 @@ services:
       - storage
     ports:
       - 5001:5001
+    networks:
+      - backend-network
+
+
+networks:
+  backend-network:

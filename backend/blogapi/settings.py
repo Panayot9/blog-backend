@@ -21,12 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3s_#l*$xxb^$qnqbr1v&27dn75q=fpekq$npq!uf8#veojo9*q'
+SECRET_KEY = os.environ.get('SECRET_KEY') or '0YOMesSFPNcS23Sl6lSfrbzPeNvdtVGq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') or True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'backend',
+    'localhost',
+    '127.0.0.1',
+    os.getenv('DJANGO_HOST', '0.0.0.0'),
+]
 
 
 # Set custom model authentication model for the project
@@ -104,8 +109,12 @@ WSGI_APPLICATION = 'blogapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'HOST': os.environ.get('POSTGRES_HOST') or '0.0.0.0',
+        'PORT': os.environ.get('POSTGRES_PORT') or 5432,
+        'USER': os.environ.get('POSTGRES_USER') or 'postgres',
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD') or 'postgres',
     }
 }
 
