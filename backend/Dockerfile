@@ -1,21 +1,20 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.8-slim-buster
+FROM python:3.8-slim
 
-# Keeps Python from generating .pyc files in the container
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# Turns off buffering for easier container logging
-ENV PYTHONUNBUFFERED=1
+# Set environment variables
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /usr/app
 
 # Install dev requirements
 COPY requirements-dev.txt .
-RUN pip install --disable-pip-version-check -r requirements-dev.txt
+RUN pip install -r requirements-dev.txt
 
 # Install needed requirements
 COPY requirements.txt .
-RUN pip install --disable-pip-version-check -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 

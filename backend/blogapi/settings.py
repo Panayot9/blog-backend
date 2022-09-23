@@ -51,10 +51,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # 3-rd party apps
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'dj_rest_auth',
+    'dj_rest_auth.registration',
     'drf_spectacular',
     # Local
     'accounts.apps.AccountsConfig',
@@ -67,7 +73,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',  # use token authentication
+        'rest_framework.authentication.TokenAuthentication',  # use token authentication
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -76,6 +82,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -83,6 +90,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = (
+    "http://localhost:5001",
+)
 ROOT_URLCONF = 'blogapi.urls'
 
 TEMPLATES = [
@@ -96,10 +106,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request'
             ],
         },
     },
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'blogapi.wsgi.application'
 
@@ -155,10 +170,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIR = [
-    os.path.join(BASE_DIR, 'static')
-]
-
+STATICFILES_DIRS = [BASE_DIR / "static"]  # new
+STATIC_ROOT = BASE_DIR / "staticfiles"  # new
 # https://devcenter.heroku.com/articles/django-assets
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
